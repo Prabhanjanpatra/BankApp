@@ -1,8 +1,9 @@
 class SwissBank:
     minbalance = 50000
-    ifsccode = "swis001612"
+    ifsccode = "SWISS000999" 
 
-    def __init__(self, name, mobno, adharno, balance, pin):
+    def __init__(self, accno, name, mobno, adharno, balance, pin):
+        self.accno = accno  
         self.name = name
         self.mobno = mobno
         self.adharno = adharno
@@ -10,12 +11,13 @@ class SwissBank:
         self.pin = pin
 
     def details(self):
+        print(f"Bank IFSC: {SwissBank.ifsccode}") 
+        print(f"Account No: {self.accno}")
         print(f"Name: {self.name}")
         print(f"Mobile Number: {self.mobno}")
         print(f"Adhar Number: {self.adharno}")
         print(f"Balance: {self.balance}")
         print("-" * 20)
-
     def withdraw(self):
         count = 3
         while count > 0:
@@ -33,7 +35,7 @@ class SwissBank:
                             print("Amount debited successfully... Collect your cash.")
                             print(f"Remaining Balance: {self.balance}")
                         else:
-                            print("Enter valid denomination (multiples of 100).")
+                            print("Invalid Amount! Amount must be in multiples of 100.")
                     else:
                         print("Invalid limit (Min 100, Max 50000)")
                     break # Exit loop on success or limit fail
@@ -58,9 +60,9 @@ class SwissBank:
                         if amount % 100 == 0:
                             self.balance += amount
                             print("Amount credited successfully.")
-                            print(f"New Balance: {self.balance}")
+                            print(f"Available Balance : {self.balance}")
                         else:
-                            print("Enter valid denomination.")
+                            print("Invalid Amount! Amount must be in multiples of 100.")
                     else:
                         print("Invalid limit.")
                     break
@@ -75,13 +77,16 @@ class SwissBank:
     def check_balance(self):
         count = 3
         while count > 0:
-            pin = int(input("Enter your 4 digit pin: "))
-            if pin == self.pin:
-                print(f'Available balance is {self.balance}')
-                break
-            else:
-                print("Incorrect PIN")
-                count -= 1
+            try:
+                pin = int(input("Enter your 4 digit pin: "))
+                if pin == self.pin:
+                    print(f'Available balance is {self.balance}')
+                    break
+                else:
+                    print("Incorrect PIN")
+                    count -= 1
+            except ValueError:
+                print("Please enter numbers only.")
         else:
             print("No attempts left.")
 
@@ -109,10 +114,9 @@ class SwissBank:
 
 # --- DRIVER CODE ---
 
-customer1 = SwissBank("Vijay Malya", 8888888888, 1001001001234, 50000000, 8789) 
-customer2 = SwissBank("Ambani", 9999999999, 123456789013, 2999999, 1124)
-customer3 = SwissBank("Tata", 9876543212, 123456789014, 80000000, 9101)        
+customer1 = SwissBank(30901234567891, "Vijay Malya", 8888888888, 1001001001234, 50000000, 8789) 
+customer2 = SwissBank(45019876543210, "Ambani", 9999999999, 123456789013, 2999999, 1124)
+customer3 = SwissBank(67125555666677, "Tata", 9876543212, 123456789014, 80000000, 9101)        
          
 # Testing
-customer1.details()
-customer1.withdraw()
+customer1.deposite() 
