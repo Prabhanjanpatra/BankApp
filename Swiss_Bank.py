@@ -46,7 +46,8 @@ class SwissBank:
                 print("Please enter numbers only.")
         else:
             print("No attempts left. Try again after 10 minutes.")
-
+def varification():
+    
     def deposite(self):
         count = 3
         while count > 0: 
